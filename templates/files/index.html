@@ -1,0 +1,47 @@
+<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+  <link href="/stylesheets/browser.css" rel="stylesheet" type="text/css" />
+  
+</head>
+<body>
+
+<h1>{{ cwd }}</h1>
+
+<table id="browser">
+<thead>
+<tr>
+  <th>Name</th>
+  <th class="date">Date Modified</th>
+  <th class="size">Size</th>
+</tr>
+</thead>
+
+<tr class="odd">
+  <td class="directory"><a href="..">Parent Directory</a></td>
+  <td></td>
+  <td></td>
+</tr>
+        
+{% for entry in list %}   
+	{% if entry.isdir or entry.islink %}
+		<tr id="node_d">
+  		  <td class="directory"><a href="{{ entry.name }}">{{ entry.name }}</a></td>
+  		  <td>{{ entry.modified }}</td>
+  		  <td></td>
+        </tr>
+	{% else %}
+		<tr id="node_f">
+  		  <td class="file"><a href="{{ entry.name }}">{{ entry.name }}</a></td>
+  		  <td>{{ entry.modified }}</td>
+  		  <td>{{ entry.size }}</td>
+        </tr>
+	{% endif %}
+{% endfor %}
+</table>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+#browser                  { width:100%; margin-top:10px; border:1px solid #999999; }
+
+#browser a.node, 
+  #browser a.up, 
+  #tools li a             { color:#5D536E; text-decoration:none; }
+#browser a.node:hover, 
+  #browser a.up:hover, 
+  #tools li a:hover       { color:#3399FF; text-decoration:underline; }
+
+#browser th,
+#browser td               { text-align: left; padding:5px; border: 0; }
+#browser thead th         { background: #0066CC; color:white; background: url("/images/thead_bg.gif") repeat 50% 50%; }
+
+table .even               { background-color: #EAEFFA; }
+table .odd                { background-color: #FFFFFF; }
+table .highlight          { background-color: #FFFF99; }
+
+#browser .directory, #file-shelf .directory { background-image: url("/images/folder.png"); }
+#browser .file, #file-shelf .file           { background-image: url("/images/page.png"); }
+#browser .up              { background-image: url("/images/arrow_up.png"); }
+#file-shelf .directory, #file-shelf .file { background-position: 0 50%; padding-left: 22px; background-repeat: no-repeat; }
+#browser .directory,
+  #browser .file,
+  #browser .up            { background-repeat: no-repeat;
+                            background-position: 5px 50%; 
+                            padding-left: 28px; }
+#browser .up              { background-position: 0 50%; padding-left: 23px; padding-bottom: 2px; }
+
+table#browser .file_actions { margin-left: 10px; color: #aaa; }
+
+table#browser tr td form input { width: 50%; }
+
+table#browser tr td { vertical-align: middle; }
+
+table#browser th.size, table#browser td.size { width: 10%; text-align:center;  }
+table#browser th.date, table#browser td.date { width: 25%; text-align:center;  }
+
+.browser-path { margin-bottom:1em; }
+.browser-path ul { padding: 0; margin: 0; }
+.browser-path ul li {
+  display: inline;
+  list-style: none;
+  background: transparent;
+  font-size: 15px;
+  font-family: "Lucida Grande", "Lucida Sans", geneva, arial, verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+form { margin-bottom:0; }
+
+#tools { border: 1px solid #ccc;; }
+#tools ul#show-browser-actions      { background: #eee; padding-bottom: 5px; padding-top: 3px; margin-bottom:0;}
+#tools ul#show-browser-actions li a { color: #333; }
+#tools ul#show-browser-actions li   { display: inline; margin-right: 10px; padding: 5px 5px 8px 25px; }
+#tools ul#show-browser-actions li#directory-add  { background: url('/images/folder_add.png') no-repeat 5px 5px; }
+#tools ul#show-browser-actions li#file-add       { background: url('/images/page_add.png') no-repeat 5px 5px; }
+#tools ul#show-browser-actions li#show-clipboard { background: url('/images/clipboard.pngf') no-repeat 5px 5px; }
+
+.browser-action { margin: 10px 0 10px 0; }
+#tool-content { margin: 0 10px 0 10px; }
+
+#browser-upload-file  { margin-top: 10px; }
+
+.file_actions img { vertical-align: -4px; }
+
+#file-shelf ul    { margin:0 0 10px 0; padding:0; }
+#file-shelf ul li { margin:0 0 2px 0; padding:0; list-style: none; background:transparent; }
+#file-shelf ul li label {padding-bottom:2px;}
+#file-shelf ul li img { margin:0; padding:0; margin-bottom:-4px; margin-left:5px; }
+#file-shelf p img { margin:0; padding:0; margin-bottom:-4px; }
