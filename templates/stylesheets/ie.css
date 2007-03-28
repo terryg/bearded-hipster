@@ -1,0 +1,20 @@
+/*==================================================================================================
+
+  Strongspace IE Patches Style Sheet
+  (c) Copyright 2005 Justin French, TextDrive Inc. All Rights Reserved.
+  
+  This is all the crap that was needed to patch IE 6 into some form of compliance.
+
+==================================================================================================*/
+
+.clear                    { overflow:hidden; }
+
+
+input.full, 
+select.full,
+textarea.full             { width:95%; }
+
+#nav li#logout            { margin-right:10px; }
+
+
+.file_actions img { vertical-align: -3px; }

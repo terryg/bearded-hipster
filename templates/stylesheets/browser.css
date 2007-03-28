@@ -17,7 +17,7 @@ table .highlight          { background-color: #FFFF99; }
 
 #browser .directory, #file-shelf .directory { background-image: url("/images/folder.png"); }
 #browser .file, #file-shelf .file           { background-image: url("/images/page.png"); }
-#browser .up              { background-image: url("/images/arrow_up.png"); }
+#browser .up              { background-image: url("/images/overcast/parent_directory.gif"); }
 #file-shelf .directory, #file-shelf .file { background-position: 0 50%; padding-left: 22px; background-repeat: no-repeat; }
 #browser .directory,
   #browser .file,
@@ -56,7 +56,7 @@ form { margin-bottom:0; }
 #tools ul#show-browser-actions li   { display: inline; margin-right: 10px; padding: 5px 5px 8px 25px; }
 #tools ul#show-browser-actions li#directory-add  { background: url('/images/folder_add.png') no-repeat 5px 5px; }
 #tools ul#show-browser-actions li#file-add       { background: url('/images/page_add.png') no-repeat 5px 5px; }
-#tools ul#show-browser-actions li#show-clipboard { background: url('/images/clipboard.pngf') no-repeat 5px 5px; }
+#tools ul#show-browser-actions li#show-clipboard { background: url('/images/basket.png') no-repeat 5px 5px; }
 
 .browser-action { margin: 10px 0 10px 0; }
 #tool-content { margin: 0 10px 0 10px; }

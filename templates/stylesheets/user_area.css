@@ -1,0 +1,19 @@
+#branding { background: url("/images/small_cube_trans.gif") no-repeat 0% 45%; border:0; padding: 20px 20px 20px 0; }
+#branding h1 { line-height:20px; margin-bottom:5px; }
+#branding h1 a { color: #fff; padding: 5px 5px 5px 50px; text-decoration: none; }
+
+/* UPLOAD STATUS BAR */
+.progressBar              { margin: 5px; }
+
+.progressBar .border {
+  background: url(/images/progressbar_bg.gif) repeat-x;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  width: 100%;
+}
+
+.progressBar .background {
+  background: url(/images/progressbar.gif) repeat-x;
+  height: 15px;
+  width: 0%;
+}

@@ -3,14 +3,110 @@
 
 <html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+		
+	<link href="/stylesheets/base.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<link href="/stylesheets/user_area.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<link href="/stylesheets/browser.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+	<!--[if IE]>
+      <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
 
   <link href="/stylesheets/browser.css" rel="stylesheet" type="text/css" />
   
+  <script src="/javascripts/prototype.js" type="text/javascript"></script>
+  <script src="/javascripts/effects.js" type="text/javascript"></script>
+  <script src="/javascripts/browser.js" type="text/javascript"></script>
+  <script type="text/javascript">
+      
+  Event.observe(window, 'load', function(event) {
+    Browser.restripe();
+        Toolbar.Clipboard.update_count();
+      });
+    var toolbar_icons = ["directory-add", "show-clipboard", "file-add"];
+  var toolbar_items = ["browser-create-dir", "browser-upload-file", "file-shelf"];
+    </script>
+    
 </head>
 <body>
+<div id="wrap">
 
 <h1>{{ cwd }}</h1>
 
+  <div id="tools">
+    <ul id="show-browser-actions" class="browser-actions">
+      <li id="file-add">
+        <a href="javascript:void(null)" 
+          onclick="Toolbar.toggle('browser-upload-file', 'file-add');Field.focus('incoming_file');"
+          title="upload a file to the current directory">Upload a file</a>
+        </li>
+
+      <li id="directory-add">
+        <a href="javascript:void(null)" 
+          onclick="Toolbar.toggle('browser-create-dir', 'directory-add');Field.focus('directory_name');"
+          title="create a new directory within the current directory">Create a new directory</a>
+      </li>
+      <li id="show-clipboard">
+        <a href="javascript:void(null)" 
+          onclick="Toolbar.toggle('file-shelf', 'show-clipboard');"
+          title="Your Basket holds files for copying or moving to another location">My Basket<span id="file-shelf-count"></span></a>
+      </li>
+    </ul>
+
+    <div id="tool-content">
+      <div id="browser-create-dir" class="browser-action" style="display: none;">
+      	<h3>Create a new directory</h3>
+      	<form action="/files/mkdir{{ path }}" method="post">
+        	<p><label for="directory_name">Name:</label> <input id="directory_name" name="directory[name]" size="30" type="text" /></p>
+        	<div>
+        	  <input type="submit" name="submit_btn" value="Create" />
+
+        	  <input type="submit" name="submit_btn" value="Create &amp; go to" />
+        	  or <a href="javascript:void(null)" class="red" onclick="Toolbar.hide_all();">Cancel</a>
+        	</div>
+      	</form>
+      </div>
+      <div id="browser-upload-file" class="browser-action item" style="display: none;">
+
+	<h3>Upload a file here</h3>
+	
+	<form action="/files/upload{{ path }}" enctype="multipart/form-data" method="post" onsubmit="Effect.Appear('uploadstatus')">
+ 
+    <div>
+  	  <label for="incoming_file">1. Select a file from your computer's hard drive:</label>
+      <input id="incoming_file" name="incoming[file]" size="30" type="file" />
+    </div>
+  	
+<!-- 	<div> -->
+<!--  	  <input type="checkbox" id="expand_file" name="expand_file" value="1" /><label for="expand_file" class="inline">Check to unzip file after upload.</label> -->
+<!--  	</div> -->
+  	  	
+  	<div>
+  	  <label for="submit_button">2. Click "Upload" and wait &#8211; large files can take a few minutes to transfer.</label>
+  	  <input type="submit" value="Upload" id="submit_button" onclick="return true" />
+  	  
+  	    or <a href="javascript:void(null)" class="red" onclick="Toolbar.hide_all();">Cancel</a>
+  	  
+  	</div>
+  	
+  	<div id="uploadstatus" style="display: none">
+
+  	  <img src="/images/spinner.gif" class="spinner" alt="" /> Uploading, please wait...
+  	</div>
+  </form>
+
+</div>  
+      <div id="file-shelf" class="browser-action" style="display:none;">
+      
+  <p>Click the basket icon (<img alt="Place in basket" src="/images/basket_add.png" title="Place in basket" />) 
+    next to an item, to add a file or directory here for moving and/or copying. 
+    (<a href="javascript:void(null)" class="red" onclick="Toolbar.hide_all();">Hide</a>)</p>
+
+      </div>
+
+    </div>
+  </div>
+  
 <table id="browser">
 <thead>
 <tr>
@@ -25,23 +121,125 @@
   <td></td>
   <td></td>
 </tr>
-        
+
+    
 {% for entry in list %}   
 	{% if entry.isdir or entry.islink %}
-		<tr id="node_d">
-  		  <td class="directory"><a href="{{ entry.name }}">{{ entry.name }}</a></td>
-  		  <td>{{ entry.modified }}</td>
+		<tr id="node_d{{ forloop.counter0 }}">
+ 		  <td class="directory" onmouseover="Element.show('actions_d{{ forloop.counter0 }}')" onmouseout="Element.hide('actions_d{{ forloop.counter0 }}')">
+  		    <span id="item_d{{ forloop.counter0 }}">
+  		      <a href="/files/{{ entry.path_without_base }}" onfocus="Element.show('actions_d{{ forloop.counter0 }}')" class="node">{{ entry.name }}</a>
+  		   
+  		   <span class="file_actions" id="actions_d{{ forloop.counter0 }}" style="display: none;">
+
+<a title="Click to rename" href="javascript:Element.hide('item_d{{ forloop.counter0 }}');Element.show('rename_d{{ forloop.counter0 }}');Field.focus('rename_field_d{{ forloop.counter0 }}')"><img src="/images/textfield_rename.png" width="16" height="16" alt="rename" /></a>
+<a href="#" onclick="if (confirm('Are you sure you want to permanently delete \'{{ entry.name }}\'?')) { new Ajax.Updater({failure:'nodefailure_d{{ forloop.counter0 }}'}, '/files/delete/{{ entry.path_without_base }}/', {asynchronous:true, evalScripts:true, onComplete:function(request){if (request.status == 200) {
+                                            Effect.Fade('node_d{{ forloop.counter0 }}', { 
+                                             afterFinish: function(effect){
+                                               if (Toolbar.Clipboard.has_item('{{ entry.path_with_dashes ')) {
+                                                 new Ajax.Updater('file-shelf', '/remove_from_file_shelf?name={{ entry.path_url_encrypted }}', {asynchronous:true, evalScripts:true, onComplete:function(request){Toolbar.Clipboard.update_count();}})
+                                               };
+                                               Element.remove(effect.element);
+                                               Browser.restripe();
+                                             } });
+                                          } else {
+                                            Element.hide('nodestatus_d{{ forloop.counter0 }}');
+                                            Effect.Fade('nodefailure_d{{ forloop.counter0 }}', { duration: 5 });
+                                          };}, onLoading:function(request){$('nodestatus_d{{ forloop.counter0 }}').innerHTML='&lt;img src=&quot;/images/spinner.gif&quot; class=&quot;spinner&quot; alt=&quot;&quot; /&gt; Deleting file, please wait...';Effect.Appear('nodestatus_d{{ forloop.counter0 }}');}}); }; return false;"><img alt="Delete" id="delete_spinner_#{id}" src="/images/bin_closed.png" title="Click to delete" /></a>
+                                          
+<a href="#" onclick="new Ajax.Updater('file-shelf', '/browser/add_to_shelf?kind=file&amp;from_path={{ entry.path_url_encrypted }}', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade('nodestatus_d{{ forloop.counter0 }}', {
+                                            afterFinish: function(effect) {
+                                              $(effect.element).innerHTML = '';
+                                              Toolbar.Clipboard.update_count();
+                                            }
+                                        });}, onLoading:function(request){$('nodestatus_d{{ forloop.counter0 }}').innerHTML='&lt;img src=&quot;/images/spinner.gif&quot; class=&quot;spinner&quot; alt=&quot;&quot; /&gt; Adding to clipboard, please wait...';Effect.Appear('nodestatus_d{{ forloop.counter0 }}');}}); return false;">
+                                        
+                     <img alt="Place in file shelf" src="/images/basket_add.png" title="Place in basket" />
+
+
+     </a>
+         
+         
+                     </span>
+            </span> 
+      <span id="nodestatus_d{{ forloop.counter0 }}"> </span>
+      <span id="nodefailure_d{{ forloop.counter0 }}" style="color:red;"> </span>
+    
+          <span id="rename_d{{ forloop.counter0 }}" style="display: none;">
+        <form action="/files/rename/{{ entry.path_without_base }}" method="post">
+      	  <input id="file_original_name" name="file[original_name]" type="hidden" value="{{ entry.name }}" />
+      	  <input id="file_original_path" name="file[original_path]" type="hidden" value="{{ entry.path }}" />
+
+      	  <input class="filefield" id="rename_field_d{{ forloop.counter0 }}" name="rename[new_name]" size="30" type="text" value="{{ entry.name }}" />
+      	  or <a href="javascript:Element.hide('rename_d{{ forloop.counter0 }}');Element.show('item_d{{ forloop.counter0 }}')" class="red">Cancel</a>
+        </form>
+      </span>
+
+  		  </td>
+  	
+  	  		  <td>{{ entry.modified }}</td>
   		  <td></td>
         </tr>
 	{% else %}
-		<tr id="node_f">
-  		  <td class="file"><a href="{{ entry.name }}">{{ entry.name }}</a></td>
+		<tr id="node_f{{ forloop.counter0 }}">
+  		  <td class="file" onmouseover="Element.show('actions_f{{ forloop.counter0 }}')" onmouseout="Element.hide('actions_f{{ forloop.counter0 }}')">
+  		    <span id="item_f{{ forloop.counter0 }}">
+  		      <a href="/files/download/{{ entry.path_without_base }}" onfocus="Element.show('actions_f{{ forloop.counter0 }}')" class="node">{{ entry.name }}</a>
+  		   
+  		   <span class="file_actions" id="actions_f{{ forloop.counter0 }}" style="display: none;">
+
+<a title="Click to rename" href="javascript:Element.hide('item_f{{ forloop.counter0 }}');Element.show('rename_f{{ forloop.counter0 }}');Field.focus('rename_field_f{{ forloop.counter0 }}')"><img src="/images/textfield_rename.png" width="16" height="16" alt="rename" /></a>
+<a href="#" onclick="if (confirm('Are you sure you want to permanently delete \'{{ entry.name }}\'?')) { new Ajax.Updater({failure:'nodefailure_f{{ forloop.counter0 }}'}, '/files/delete/{{ entry.path_without_base }}', {asynchronous:true, evalScripts:true, onComplete:function(request){if (request.status == 200) {
+                                            Effect.Fade('node_f{{ forloop.counter0 }}', { 
+                                             afterFinish: function(effect){
+                                               if (Toolbar.Clipboard.has_item('{{ entry.path_with_dashes ')) {
+                                                 new Ajax.Updater('file-shelf', '/remove_from_file_shelf?name={{ entry.path_url_encrypted }}', {asynchronous:true, evalScripts:true, onComplete:function(request){Toolbar.Clipboard.update_count();}})
+                                               };
+                                               Element.remove(effect.element);
+                                               Browser.restripe();
+                                             } });
+                                          } else {
+                                            Element.hide('nodestatus_f{{ forloop.counter0 }}');
+                                            Effect.Fade('nodefailure_f{{ forloop.counter0 }}', { duration: 5 });
+                                          };}, onLoading:function(request){$('nodestatus_f{{ forloop.counter0 }}').innerHTML='&lt;img src=&quot;/images/spinner.gif&quot; class=&quot;spinner&quot; alt=&quot;&quot; /&gt; Deleting file, please wait...';Effect.Appear('nodestatus_f{{ forloop.counter0 }}');}}); }; return false;"><img alt="Delete" id="delete_spinner_#{id}" src="/images/bin_closed.png" title="Click to delete" /></a>
+                                          
+<a href="#" onclick="new Ajax.Updater('file-shelf', '/browser/add_to_shelf?kind=file&amp;from_path={{ entry.path_url_encrypted }}', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade('nodestatus_f{{ forloop.counter0 }}', {
+                                            afterFinish: function(effect) {
+                                              $(effect.element).innerHTML = '';
+                                              Toolbar.Clipboard.update_count();
+                                            }
+                                        });}, onLoading:function(request){$('nodestatus_f{{ forloop.counter0 }}').innerHTML='&lt;img src=&quot;/images/spinner.gif&quot; class=&quot;spinner&quot; alt=&quot;&quot; /&gt; Adding to clipboard, please wait...';Effect.Appear('nodestatus_f{{ forloop.counter0 }}');}}); return false;">
+                                        
+                     <img alt="Place in file shelf" src="/images/basket_add.png" title="Place in basket" />
+
+
+     </a>
+         
+         
+                     </span>
+            </span> 
+      <span id="nodestatus_f{{ forloop.counter0 }}"> </span>
+      <span id="nodefailure_f{{ forloop.counter0 }}" style="color:red;"> </span>
+    
+          <span id="rename_f{{ forloop.counter0 }}" style="display: none;">
+        <form action="/files/rename/{{ entry.path_without_base }}" method="post">
+      	  <input id="file_original_name" name="file[original_name]" type="hidden" value="{{ entry.name }}" />
+      	  <input id="file_original_path" name="file[original_path]" type="hidden" value="{{ entry.path }}" />
+
+      	  <input class="filefield" id="rename_field_f{{ forloop.counter0 }}" name="rename[new_name]" size="30" type="text" value="{{ entry.name }}" />
+      	  or <a href="javascript:Element.hide('rename_f{{ forloop.counter0 }}');Element.show('item_f{{ forloop.counter0 }}')" class="red">Cancel</a>
+        </form>
+      </span>
+
+  		  </td>
   		  <td>{{ entry.modified }}</td>
   		  <td>{{ entry.size }}</td>
         </tr>
 	{% endif %}
 {% endfor %}
 </table>
+
+</div>
 
 </body>
 </html>

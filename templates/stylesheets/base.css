@@ -1,0 +1,161 @@
+/*==================================================================================================
+
+  Strongspace Base Style Sheet
+  (c) Copyright 2005 Justin French, TextDrive Inc. All Rights Reserved.
+  
+  All area stylesheets (eg public_area.css) and Controller (eg dashboard.css) inherit 
+  from this base stylesheet.
+
+==================================================================================================*/
+
+
+/* LAYOUT */
+body                  { margin:0; padding:0; background:#fff; }
+#wrap                 { width:760px; padding: 0 10px; margin:0 auto; background:#fff url("/images/bg.gif") repeat-y top center; }
+#content              { padding:20px; }
+
+#drop-shadow-container { width:780px; height:7px; margin:0 auto; background:#fff url("/images/footer_bg.gif") no-repeat; }
+
+/* COLUMNS */
+#main                 { width:460px; float:left; border-right:1px solid #ccc; padding-right:20px; }
+#sub                  { width:213px; float:left; padding-left:20px; border-left:1px solid #ccc; margin-left:-1px; }
+
+
+/*================================================================================================*/
+
+/* MISC */
+.clear                { clear:both; visibility:hidden; height:0; }
+.hide                 { display:none; }
+.item                 { margin-bottom:2em; }
+.spinner              { vertical-align: -4px; }
+
+
+/* TYPOGRAPHY */
+body, table           { font-family:verdana; font-size:11px; line-height:160%; }
+h1,h2,h3,h4,h5,h6,p,
+pre,table,blockquote  { margin:0 0 1em 0; padding:0; }
+h2, h3                { font-family:"Lucida Grande", "Lucida Sans", geneva, arial, sans-serif; font-weight:normal; }
+h2                    { font-size:20px; font-weight:bold; }
+h3                    { font-size:15px; margin-bottom:0.6em; }
+h4,h5,h6              { font-size:11px; margin-bottom:0; }
+blockquote            { padding:1em; padding-bottom:0; border:1px solid #ccc; background:#F0F0F0; }
+p+h3                  { margin-top:1.5em; }
+
+
+.hint                 { font-style:italic; color:#999; }
+small                 { font-size:10px; line-height:10px; }
+sup,sub               { font-size:9px; line-height:9px; vertical-align:30%;  }
+ol.footnote           { font-size:10px; line-height:12px; color:#aaa; margin-left:0; padding-left:15px; }
+
+
+/* LINKS */
+a                     { color:#3399FF; text-decoration:underline; }
+a:hover               { text-decoration:underline; }
+a:visited             { color:#3366CC; }
+a.delete, a.red, .red     { color:#C11B1B; }
+a.create, a.green, .green { color:#78A400; }
+
+
+/* IMAGES */
+
+a img { border:none; }
+
+
+/* TABLES */
+table                 { width:100%; border-collapse:collapse; margin-bottom:1em; border:1px solid #ccc; }
+tr                    {  }
+td,th                 { margin:0; padding:.5em 1em; border:1px solid #ccc; border-width:1px 0; text-align:left; vertical-align:middle; }
+td p                  { margin:0; }
+table thead th        { background:url("/images/thead_bg.gif") 50% 50%; color:white; }
+
+/* Smaller discrete table styling used for listings of many things */
+table.listing thead th { background:#eee; color:#000; border-bottom: 1px solid #ccc; }
+table.listing td, table.listing th { padding: 2px; }
+
+
+/* FORMS */
+form                  { margin:0; margin-bottom:2em; }
+fieldset              { padding:0; border:0; margin:0; margin-bottom:2.5em; }
+form .item            { margin-bottom:1em; }
+form .item p          { margin-bottom:0; }
+div.fieldWithErrors   { display:inline; }  /* hack for Rails automated div.fieldWithErrors around fields with errors */
+#buttons              { clear:both; }
+input.full, 
+textarea.full,
+select.full           { display:block; width:99%; position:static;}
+.item label           { display:block; }
+.checkbox label       { display:inline; }
+
+form table            { margin-bottom:0; border:0; }
+form td, form th      { padding:5px 0; text-align:left; border:0; vertical-align:top; }
+form table th         { width:120px; font-weight:normal; } 
+
+/* LISTS */ 
+ul                    { margin:0; padding:0; margin-bottom:1em; list-style:none; }
+ul li                 { margin:0; padding:0; padding-left:24px; list-style:none; background: url("/images/bullet.gif") no-repeat 8px 0.7em; }
+ol                    { margin-left:0; padding-left:3em; }
+ol li                 { margin-bottom:.5em; margin-left:1em; padding-left:0; }
+
+
+
+/*================================================================================================*/
+
+/* HEADER */
+#header               { background:#000 url("/images/header_bg.gif") repeat-x 50% 50%; }
+
+#branding             { margin-left:20px; }
+#branding h1          { font-size:20px; color:white; font-family:"Lucida Grande",helvetica,arial,sans-serif; font-weight:normal; margin:0; line-height:0;}
+#branding img         { display:block; margin-left:500px; padding-top:20px; }
+
+/* NAVIGATION  */
+#nav                  { width:100%;}
+#nav ul               { list-style:none; margin:0; margin-left:20px; padding:0; }
+#nav li               { float:left; margin:0; padding:0; border:1px solid white; border-width: 1px 1px 0 0; list-style:none;}
+#nav li.first         { border-left:1px solid white; }
+#nav a                { float:left; display:block; padding:3px 8px 6px 8px; color:white; background:#666 url("/images/nav_tab_bg_off_grey.gif") repeat-x top; text-decoration:none; }
+#nav a:hover          { color:#fff; background:#333; }
+#nav a.selected       { color:#000; background:white; }
+
+#nav li#logout             { float:right; margin-right:20px; border:none; }
+#nav li#logout a           { background:none; padding-left:0; padding-right:0; padding-top:3px; }
+#nav li#logout a:hover     { background:none; text-decoration:underline; }
+
+/* FOOTER */
+#footer               { background:#F0F0F0; border-top:1px solid #ccc; font-size:10px; padding:10px 20px; text-align:center; }
+#footer p             { margin:0; }
+#footer img 					{ margin:10px; }
+                      
+/* MESSAGES */     
+.message              { clear:both; padding:5px 5px 6px 30px; border:1px solid black; margin:0; margin-bottom:20px; border-width: 1px 0; }
+.message.success      { border-color:#78A400; color:#78A400; background:#F7FDF1 url("/images/success.gif") no-repeat 5px 5px; }
+.message.failure      { border-color:#C11B1B; color:#C11B1B; background:#F9F0F0 url("/images/failure.gif") no-repeat 5px 5px; }
+.message.notice       { border-color:#0066CC; color:#0066CC; background:#EFF5FC url("/images/notice.gif") no-repeat 5px 5px; }
+.message ul li        { list-style: none; background: transparent; padding-left: 10px;}
+
+/* QUESTIONS */
+.question             {}
+.question h4          { margin-bottom:0; }
+
+
+/* BAR GRAPHS */
+.bar-graph            { margin:.5em 0; padding:4px; color:white; text-align:center; font-size:10px; }
+
+
+/* FORM ERRORS */
+#form-errors          { border:1px solid #C11B1B; margin-bottom:1em; background:#F9F0F0; }
+#form-errors p,
+#form-errors ul       { margin:0 1em 1em 1em; }
+#form-errors h3       { background:#C11B1B; color:white; padding:5px 10px; font-size:12px; font-family:verdana,arial,sans-serif; }
+
+
+/* FAQS */
+ul#faq-list { margin-bottom: 25px; }
+.faq        { margin-bottom: 20px; }
+.faq h3     { margin-bottom: 0; }
+
+
+/* UPLOAD FORM */
+
+#browser-upload-file div { margin-bottom:1em; }
+#browser-upload-file label { display:block; margin-bottom:.5em; }
+#browser-upload-file label.inline { display:inline; padding-left: 3px; }
